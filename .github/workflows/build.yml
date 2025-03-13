@@ -3,7 +3,7 @@ name: Build Cordova Android APK
 on:
   push:
     branches:
-      - main  # Run on every push to main
+      - main
 
 jobs:
   build:
@@ -36,7 +36,11 @@ jobs:
 
       - name: Build APK
         run: |
-          cordova build android --release
+          cordova build android --release || (echo "Cordova Build Failed!" && exit 1)
+
+      - name: Debug APK Location
+        run: |
+          find platforms/android/app/build/outputs/apk/ -type f
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
