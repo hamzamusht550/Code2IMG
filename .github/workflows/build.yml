@@ -34,9 +34,9 @@ jobs:
         run: |
           cordova platform add android
 
-      - name: Build APK
+      - name: Build APK (Instead of AAB)
         run: |
-          cordova build android --release || (echo "Cordova Build Failed!" && exit 1)
+            cordova build android --release -- --packageType=apk || (echo "Cordova Build Failed!" && exit 1)
 
       - name: Debug APK Location
         run: |
@@ -46,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: platforms/android/app/build/outputs/apk/release/app-release.apk
+          path: platforms/android/app/build/outputs/apk/**/*.apk
